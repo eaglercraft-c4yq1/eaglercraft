@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Minecraft Launcher Clone"
+description = "A responsive dark game launcher dashboard recreated from the provided reference image, with a feature hero, news cards, profile panel, and interactive navigation."
+version = "1.0.0"
+id = "artifacts/minecraft-launcher-clone"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19639
+
+[services.development]
+run = "pnpm --filter @workspace/minecraft-launcher-clone run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/minecraft-launcher-clone", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/minecraft-launcher-clone/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19639"
+BASE_PATH = "/"
